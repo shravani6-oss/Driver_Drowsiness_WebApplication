@@ -1,17 +1,16 @@
-
-   # facemeshdetect.py
+# facemeshdetect.py
 import cv2
+import mediapipe as mp
 import numpy as np
-from mediapipe.python import solutions as mp_solutions
 
 class faceMeshDetection:
     def __init__(self, max_faces=1, refine_landmarks=True, min_detection_confidence=0.5, min_tracking_confidence=0.5):
-        # Use mediapipe python solutions namespace
-        self.mpdraw = mp_solutions.drawing_utils
-        self.mpface = mp_solutions.face_mesh
-
+        # Drawing utils
+        self.mpdraw = mp.solutions.drawing_utils
+        # Face mesh module
+        self.face_mesh_module = mp.solutions.face_mesh
         # Initialize FaceMesh
-        self.faceMesh = self.mpface.FaceMesh(
+        self.faceMesh = self.face_mesh_module.FaceMesh(
             max_num_faces=max_faces,
             refine_landmarks=refine_landmarks,
             min_detection_confidence=min_detection_confidence,
@@ -43,7 +42,7 @@ class faceMeshDetection:
                     self.mpdraw.draw_landmarks(
                         frame,
                         faceLms,
-                        self.mpface.FACEMESH_CONTOURS,
+                        self.face_mesh_module.FACEMESH_CONTOURS,
                         self.mpdraw.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=1),
                         self.mpdraw.DrawingSpec(color=(0, 0, 255), thickness=1)
                     )
